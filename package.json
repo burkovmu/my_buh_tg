@@ -8,6 +8,8 @@
     "build": "echo 'Static site - no build required'",
     "deploy": "vercel --prod",
     "start": "vercel dev",
+    "bot": "node bot.js",
+    "bot:dev": "nodemon bot.js",
     "setup-env": "cp env.example .env && echo 'Файл .env создан. Заполните его вашими данными Supabase'"
   },
   "keywords": [
@@ -21,6 +23,11 @@
   ],
   "author": "burkovmu",
   "license": "MIT",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.64.0",
+    "dotenv": "^16.3.1",
+    "@supabase/supabase-js": "^2.38.0"
+  },
   "devDependencies": {
     "vercel": "^32.0.0"
   },

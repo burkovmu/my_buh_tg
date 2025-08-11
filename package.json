@@ -1,0 +1,30 @@
+{
+  "name": "my-buh-tg",
+  "version": "1.0.0",
+  "description": "Финансовый учет - Telegram Mini App",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build required'",
+    "deploy": "vercel --prod",
+    "start": "vercel dev",
+    "setup-env": "cp env.example .env && echo 'Файл .env создан. Заполните его вашими данными Supabase'"
+  },
+  "keywords": [
+    "telegram",
+    "mini-app",
+    "finance",
+    "accounting",
+    "budget",
+    "expenses",
+    "income"
+  ],
+  "author": "burkovmu",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

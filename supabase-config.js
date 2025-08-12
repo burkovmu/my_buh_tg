@@ -1,7 +1,10 @@
 // Supabase конфигурация
-// Получаем значения из переменных окружения или используем заглушки для разработки
-const SUPABASE_URL = window.SUPABASE_URL || 'YOUR_SUPABASE_URL'
-const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
+// В Vercel эти значения будут заменены на реальные через переменные окружения
+// Для локальной разработки замените на ваши реальные значения
+
+// ЗАМЕНИТЕ ЭТИ ЗНАЧЕНИЯ НА ВАШИ РЕАЛЬНЫЕ ДАННЫЕ ИЗ SUPABASE!
+const SUPABASE_URL = 'YOUR_SUPABASE_URL'
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'
 
 // Инициализация Supabase клиента
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)

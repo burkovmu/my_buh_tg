@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Plus, DollarSign, User, MessageSquare } from 'lucide-react'
+import { Plus, DollarSign, User, MessageSquare, TrendingUp, TrendingDown } from 'lucide-react'
 import { useTelegram } from '../hooks/useTelegram'
 
 function AddTransaction({ onAdd }) {
@@ -70,21 +70,28 @@ function AddTransaction({ onAdd }) {
       
       <form onSubmit={handleSubmit} className="transaction-form">
         <div className="form-group">
-          <label htmlFor="type" className="form-label">
+          <label className="form-label">
             <User className="form-icon" />
             Тип:
           </label>
-          <select
-            id="type"
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            className="form-select"
-            required
-          >
-            <option value="income">Доход</option>
-            <option value="expense">Расход</option>
-          </select>
+          <div className="type-toggle">
+            <button
+              type="button"
+              className={`type-btn ${formData.type === 'income' ? 'active' : ''}`}
+              onClick={() => setFormData(prev => ({ ...prev, type: 'income' }))}
+            >
+              <TrendingUp className="type-icon" />
+              Доход
+            </button>
+            <button
+              type="button"
+              className={`type-btn ${formData.type === 'expense' ? 'active' : ''}`}
+              onClick={() => setFormData(prev => ({ ...prev, type: 'expense' }))}
+            >
+              <TrendingDown className="type-icon" />
+              Расход
+            </button>
+          </div>
         </div>
         
         <div className="form-group">

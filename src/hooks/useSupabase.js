@@ -86,14 +86,18 @@ export function useSupabase(telegramUserId) {
           filter: `telegram_user_id=eq.${telegramUserId}`
         }, 
         (payload) => {
+          console.log('Realtime событие:', payload.eventType, payload)
           if (payload.eventType === 'INSERT') {
             setTransactions(prev => [payload.new, ...prev])
+            console.log('Транзакция добавлена через realtime')
           } else if (payload.eventType === 'DELETE') {
             setTransactions(prev => prev.filter(t => t.id !== payload.old.id))
+            console.log('Транзакция удалена через realtime')
           } else if (payload.eventType === 'UPDATE') {
             setTransactions(prev => prev.map(t => 
               t.id === payload.new.id ? payload.new : t
             ))
+            console.log('Транзакция обновлена через realtime')
           }
         }
       )
@@ -128,15 +132,26 @@ export function useSupabase(telegramUserId) {
         telegram_user_id: telegram_user_id || 123456789 // Используем переданный ID или тестовый числовой ID
       }
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('transactions')
         .insert([transactionData])
+        .select()
 
       if (error) throw error
       
-      // Обновляем localStorage после успешного добавления
-      const updatedTransactions = [newTransaction, ...transactions]
-      localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
+      // Получаем созданную транзакцию с правильным ID от Supabase
+      const createdTransaction = data?.[0]
+      if (createdTransaction) {
+        console.log('Транзакция успешно добавлена в Supabase:', createdTransaction)
+        // Обновляем локальное состояние
+        setTransactions(prev => [createdTransaction, ...prev])
+        // Обновляем localStorage
+        const updatedTransactions = [createdTransaction, ...transactions]
+        localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
+        console.log('Локальное состояние обновлено')
+      } else {
+        console.warn('Транзакция добавлена, но данные не получены обратно')
+      }
     } catch (error) {
       console.error('Ошибка добавления транзакции:', error)
       throw error
@@ -161,9 +176,13 @@ export function useSupabase(telegramUserId) {
 
       if (error) throw error
       
-      // Обновляем localStorage после успешного удаления
+      console.log('Транзакция успешно удалена из Supabase, ID:', id)
+      // Обновляем локальное состояние
+      setTransactions(prev => prev.filter(t => t.id !== id))
+      // Обновляем localStorage
       const updatedTransactions = transactions.filter(t => t.id !== id)
       localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
+      console.log('Локальное состояние обновлено после удаления')
     } catch (error) {
       console.error('Ошибка удаления транзакции:', error)
       throw error

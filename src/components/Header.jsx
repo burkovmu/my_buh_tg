@@ -12,6 +12,11 @@ function Header({ totalIncome, totalExpense, totalBalance }) {
 
   return (
     <header className="header">
+      <div className="header-title">
+        <Wallet className="header-icon" />
+        <h1>Финансовый учет</h1>
+      </div>
+      
       <div className="header-stats">
         <div className="stat-card income">
           <div className="stat-icon">

@@ -52,6 +52,31 @@ body {
   pointer-events: none;
 }
 
+.header-title {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.header-title h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-icon {
+  width: 28px;
+  height: 28px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .header-stats {
   position: relative;
   z-index: 1;
@@ -129,6 +154,19 @@ body {
 
 /* Адаптивность для мобильных */
 @media (max-width: 768px) {
+  .header-title {
+    margin-bottom: 20px;
+  }
+  
+  .header-title h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
   .header-stats {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;

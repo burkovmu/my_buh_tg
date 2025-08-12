@@ -1,24 +1,28 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
-// Временно используем тестовые ключи для локальной разработки
-// Для работы с Supabase замените на ваши реальные ключи:
-// 1. Скопируйте env.example в .env
-// 2. Заполните SUPABASE_URL и SUPABASE_ANON_KEY
-// 3. Или замените значения ниже напрямую
-
-// Проверяем, что ключи не тестовые
-const supabaseUrl = 'https://your-project-id.supabase.co' // Замените на ваш URL
-const supabaseKey = 'your-anon-key-here' // Замените на ваш ключ
+// Читаем ключи из переменных окружения
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_ANON_KEY
 
 // Создаем клиент только если ключи валидные
-const supabase = supabaseUrl !== 'https://your-project-id.supabase.co' && supabaseKey !== 'your-anon-key-here'
+const supabase = supabaseUrl && supabaseKey && 
+  supabaseUrl !== 'https://your-project-id.supabase.co' && 
+  supabaseKey !== 'your-anon-key-here'
   ? createClient(supabaseUrl, supabaseKey)
   : null
 
 export function useSupabase(telegramUserId) {
   const [transactions, setTransactions] = useState([])
   const [loading, setLoading] = useState(true)
+
+  // Логируем для отладки
+  console.log('useSupabase initialized with:', {
+    telegramUserId,
+    supabaseUrl: supabaseUrl ? 'configured' : 'not configured',
+    supabaseKey: supabaseKey ? 'configured' : 'not configured',
+    supabase: supabase ? 'connected' : 'not connected'
+  })
 
   useEffect(() => {
     if (telegramUserId) {
@@ -31,10 +35,15 @@ export function useSupabase(telegramUserId) {
     try {
       setLoading(true)
       
-      // Если Supabase не настроен, показываем пустой массив
+      // Если Supabase не настроен, загружаем из localStorage
       if (!supabase) {
-        console.warn('Supabase не настроен. Используйте тестовые данные.')
-        setTransactions([])
+        console.warn('Supabase не настроен. Загружаю из localStorage.')
+        const stored = localStorage.getItem(`transactions_${telegramUserId}`)
+        if (stored) {
+          setTransactions(JSON.parse(stored))
+        } else {
+          setTransactions([])
+        }
         return
       }
       
@@ -46,11 +55,19 @@ export function useSupabase(telegramUserId) {
         .order('created_at', { ascending: false })
 
       if (error) throw error
+      
+      // Сохраняем в localStorage как backup
+      localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(data || []))
       setTransactions(data || [])
     } catch (error) {
       console.error('Ошибка загрузки транзакций:', error)
-      // Для локальной разработки показываем пустой массив
-      setTransactions([])
+      // Пытаемся загрузить из localStorage
+      const stored = localStorage.getItem(`transactions_${telegramUserId}`)
+      if (stored) {
+        setTransactions(JSON.parse(stored))
+      } else {
+        setTransactions([])
+      }
     } finally {
       setLoading(false)
     }
@@ -85,15 +102,19 @@ export function useSupabase(telegramUserId) {
 
   const addTransaction = async (transaction) => {
     try {
+      // Создаем новую транзакцию
+      const newTransaction = {
+        id: Date.now(),
+        ...transaction,
+        created_at: new Date().toISOString()
+      }
+
       if (!supabase) {
-        console.warn('Supabase не настроен. Транзакция не будет сохранена.')
-        // Для локальной разработки добавляем в локальное состояние
-        const newTransaction = {
-          id: Date.now(),
-          ...transaction,
-          created_at: new Date().toISOString()
-        }
-        setTransactions(prev => [newTransaction, ...prev])
+        console.warn('Supabase не настроен. Сохраняю в localStorage.')
+        // Добавляем в локальное состояние и localStorage
+        const updatedTransactions = [newTransaction, ...transactions]
+        setTransactions(updatedTransactions)
+        localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
         return
       }
 
@@ -112,6 +133,10 @@ export function useSupabase(telegramUserId) {
         .insert([transactionData])
 
       if (error) throw error
+      
+      // Обновляем localStorage после успешного добавления
+      const updatedTransactions = [newTransaction, ...transactions]
+      localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
     } catch (error) {
       console.error('Ошибка добавления транзакции:', error)
       throw error
@@ -121,9 +146,11 @@ export function useSupabase(telegramUserId) {
   const deleteTransaction = async (id) => {
     try {
       if (!supabase) {
-        console.warn('Supabase не настроен. Удаление из локального состояния.')
-        // Для локальной разработки удаляем из локального состояния
-        setTransactions(prev => prev.filter(t => t.id !== id))
+        console.warn('Supabase не настроен. Удаляю из localStorage.')
+        // Удаляем из локального состояния и localStorage
+        const updatedTransactions = transactions.filter(t => t.id !== id)
+        setTransactions(updatedTransactions)
+        localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
         return
       }
 
@@ -133,6 +160,10 @@ export function useSupabase(telegramUserId) {
         .eq('id', id)
 
       if (error) throw error
+      
+      // Обновляем localStorage после успешного удаления
+      const updatedTransactions = transactions.filter(t => t.id !== id)
+      localStorage.setItem(`transactions_${telegramUserId}`, JSON.stringify(updatedTransactions))
     } catch (error) {
       console.error('Ошибка удаления транзакции:', error)
       throw error

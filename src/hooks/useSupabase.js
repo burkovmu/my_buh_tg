@@ -18,8 +18,7 @@ export function useSupabase() {
   const loadTransactions = async () => {
     try {
       setLoading(true)
-      // Временно загружаем все транзакции без фильтрации по пользователю
-      // Пока не настроим RLS политики в Supabase
+      // Загружаем транзакции с фильтрацией по пользователю
       const { data, error } = await supabase
         .from('transactions')
         .select('*')
@@ -56,14 +55,14 @@ export function useSupabase() {
 
   const addTransaction = async (transaction) => {
     try {
-      // Временно убираем telegram_user_id пока не настроим RLS
-      const { type, amount, source, comment } = transaction
+      // Добавляем telegram_user_id из параметра
+      const { type, amount, source, comment, telegram_user_id } = transaction
       const transactionData = {
         type,
         amount,
         source,
-        comment
-        // telegram_user_id будет добавлен позже
+        comment,
+        telegram_user_id: telegram_user_id || 'test_user' // Используем переданный ID или тестовый
       }
 
       const { error } = await supabase

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Wallet, User } from 'lucide-react'
+import { Wallet } from 'lucide-react'
 
-function Header({ telegramUserId, totalBalance }) {
+function Header({ totalBalance }) {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('ru-RU', {
       style: 'currency',
@@ -18,13 +18,7 @@ function Header({ telegramUserId, totalBalance }) {
           Финансовый учет
         </h1>
         
-        <div className="user-info">
-          <User className="user-icon" />
-          <span className="user-id">
-            ID: {telegramUserId || 'Загрузка...'}
-            {telegramUserId === '123456789' && ' (тестовый)'}
-          </span>
-        </div>
+
         
         <div className="balance">
           <span className="balance-label">Баланс:</span>

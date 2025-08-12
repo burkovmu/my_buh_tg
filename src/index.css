@@ -111,58 +111,83 @@ body {
 
 /* Статистика */
 .stats {
-  display: flex;
-  gap: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
   margin-bottom: 24px;
-  justify-content: center;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
 }
 
-.stats::-webkit-scrollbar {
-  display: none;
+.stats-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.stats-title {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.stats-subtitle {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
 }
 
 .stat-item {
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 18px 24px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
-  transition: all 0.2s ease;
-  min-width: 130px;
-  flex: 0 0 auto;
-}
-
-.stat-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
 }
 
 .stat-item.income {
-  border-top: 3px solid #10b981;
+  padding-right: 24px;
 }
 
 .stat-item.expense {
-  border-top: 3px solid #ef4444;
+  padding-left: 24px;
+}
+
+.stat-item.income::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
+  background: #e5e7eb;
 }
 
 .stat-label {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: #9ca3af;
   font-weight: 500;
-  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  display: block;
 }
 
 .stat-value {
-  font-size: 1.375rem;
-  font-weight: 600;
-  color: #374151;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  display: block;
+  margin-bottom: 4px;
 }
 
 .stat-value.income {
@@ -171,6 +196,41 @@ body {
 
 .stat-value.expense {
   color: #dc2626;
+}
+
+.stat-change {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.stat-change.positive {
+  color: #059669;
+}
+
+.stat-change.negative {
+  color: #dc2626;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .stat-item.income,
+  .stat-item.expense {
+    padding: 0;
+  }
+  
+  .stat-item.income::after {
+    display: none;
+  }
+  
+  .stats {
+    padding: 20px;
+  }
 }
 
 /* Добавление транзакции */

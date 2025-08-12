@@ -15,8 +15,8 @@ function AddTransaction({ onAdd }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!formData.amount || !formData.source) {
-      alert('Заполните обязательные поля')
+    if (!formData.amount) {
+      alert('Заполните сумму')
       return
     }
 
@@ -119,7 +119,6 @@ function AddTransaction({ onAdd }) {
             onChange={handleChange}
             className="form-input"
             placeholder="Например: Зарплата, Продукты..."
-            required
           />
         </div>
         

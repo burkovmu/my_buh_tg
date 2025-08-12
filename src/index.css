@@ -109,69 +109,7 @@ body {
   color: #dc2626;
 }
 
-/* Статистика */
-.stats {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
-  overflow: hidden;
-}
 
-.stats-grid {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: 0 10px;
-}
-
-.stats-grid::-webkit-scrollbar {
-  display: none;
-}
-
-.stat-item {
-  text-align: center;
-  flex: 0 0 auto;
-  min-width: 120px;
-}
-
-.stat-label {
-  font-size: 0.75rem;
-  color: #6b7280;
-  font-weight: 500;
-  margin-bottom: 6px;
-  display: block;
-}
-
-.stat-value {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #374151;
-  display: block;
-}
-
-.stat-value.income {
-  color: #059669;
-}
-
-.stat-value.expense {
-  color: #dc2626;
-}
-
-/* Адаптивность для мобильных */
-@media (max-width: 640px) {
-  .stats-grid {
-    flex-direction: column;
-    gap: 20px;
-  }
-}
 
 /* Добавление транзакции */
 .add-transaction {

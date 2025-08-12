@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
-import Stats from './components/Stats'
 import AddTransaction from './components/AddTransaction'
 import TransactionsList from './components/TransactionsList'
 import { useSupabase } from './hooks/useSupabase'
@@ -33,10 +32,7 @@ function App() {
         totalBalance={totalBalance} 
       />
       
-      <Stats 
-        totalIncome={totalIncome} 
-        totalExpense={totalExpense} 
-      />
+
       
       <AddTransaction onAdd={addTransaction} telegramUserId={telegramUserId} />
       

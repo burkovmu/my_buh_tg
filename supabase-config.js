@@ -1,6 +1,7 @@
 // Supabase конфигурация
-const SUPABASE_URL = process.env.SUPABASE_URL || 'YOUR_SUPABASE_URL'
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
+// Получаем значения из переменных окружения или используем заглушки для разработки
+const SUPABASE_URL = window.SUPABASE_URL || 'YOUR_SUPABASE_URL'
+const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
 
 // Инициализация Supabase клиента
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)

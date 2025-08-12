@@ -36,8 +36,8 @@ function TransactionsList({ transactions, currentFilter, onFilterChange, onDelet
     return (
       <div className="transactions">
         <h2 className="section-title">История транзакций</h2>
-        <div className="loading">
-          <Loader2 className="loading-icon" />
+        <div style={{ textAlign: 'center', padding: '40px', color: '#9ca3af' }}>
+          <Loader2 style={{ width: '32px', height: '32px', margin: '0 auto 15px', display: 'block' }} />
           <span>Загрузка транзакций...</span>
         </div>
       </div>
@@ -71,38 +71,41 @@ function TransactionsList({ transactions, currentFilter, onFilterChange, onDelet
       
       <div className="transactions-list">
         {transactions.length === 0 ? (
-          <div className="no-transactions">
-            <MessageSquare className="no-transactions-icon" />
+          <div style={{ textAlign: 'center', padding: '40px', color: '#9ca3af' }}>
+            <MessageSquare style={{ width: '48px', height: '48px', margin: '0 auto 20px', display: 'block', opacity: 0.5 }} />
             <p>Нет транзакций для отображения</p>
           </div>
         ) : (
           transactions.map(transaction => (
             <div key={transaction.id} className={`transaction-item ${transaction.type}`}>
               <div className="transaction-header">
-                <span className={`transaction-amount ${transaction.type}`}>
-                  {transaction.type === 'income' ? '+' : '-'}
-                  {formatCurrency(transaction.amount)}
-                </span>
+                <div>
+                  <span className={`transaction-amount ${transaction.type}`}>
+                    {transaction.type === 'income' ? '+' : '-'}
+                    {formatCurrency(transaction.amount)}
+                  </span>
+                  <span className={`transaction-type ${transaction.type}`}>
+                    {transaction.type === 'income' ? 'Доход' : 'Расход'}
+                  </span>
+                </div>
                 <button
                   className="delete-btn"
                   onClick={() => handleDelete(transaction.id)}
                   title="Удалить"
                 >
-                  <Trash2 className="delete-icon" />
+                  Удалить
                 </button>
               </div>
               
-              <div className="transaction-source">{transaction.source}</div>
+              {transaction.source && (
+                <div className="transaction-source">{transaction.source}</div>
+              )}
               
               {transaction.comment && (
-                <div className="transaction-comment">
-                  <MessageSquare className="comment-icon" />
-                  {transaction.comment}
-                </div>
+                <div className="transaction-comment">{transaction.comment}</div>
               )}
               
               <div className="transaction-date">
-                <Calendar className="date-icon" />
                 {formatDate(transaction.created_at || transaction.date)}
               </div>
             </div>

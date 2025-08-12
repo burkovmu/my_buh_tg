@@ -13,19 +13,13 @@ function Stats({ totalIncome, totalExpense }) {
   return (
     <div className="stats">
       <div className="stat-item income">
-        <TrendingUp className="stat-icon" />
-        <div className="stat-content">
-          <span className="stat-label">Доходы</span>
-          <span className="stat-amount">{formatCurrency(totalIncome)}</span>
-        </div>
+        <span className="stat-label">Доходы</span>
+        <span className="stat-value income">{formatCurrency(totalIncome)}</span>
       </div>
       
       <div className="stat-item expense">
-        <TrendingDown className="stat-icon" />
-        <div className="stat-content">
-          <span className="stat-label">Расходы</span>
-          <span className="stat-amount">{formatCurrency(totalExpense)}</span>
-        </div>
+        <span className="stat-label">Расходы</span>
+        <span className="stat-value expense">{formatCurrency(totalExpense)}</span>
       </div>
     </div>
   )

@@ -28,6 +28,8 @@ function App() {
   return (
     <div className="app">
       <Header 
+        totalIncome={totalIncome}
+        totalExpense={totalExpense}
         totalBalance={totalBalance} 
       />
       

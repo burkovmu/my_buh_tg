@@ -1,7 +1,7 @@
 import React from 'react'
-import { Wallet } from 'lucide-react'
+import { TrendingUp, TrendingDown, Wallet } from 'lucide-react'
 
-function Header({ totalBalance }) {
+function Header({ totalIncome, totalExpense, totalBalance }) {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('ru-RU', {
       style: 'currency',
@@ -12,19 +12,37 @@ function Header({ totalBalance }) {
 
   return (
     <header className="header">
-      <div className="header-content">
-        <h1 className="header-title">
-          <Wallet className="header-icon" />
-          Финансовый учет
-        </h1>
+      <div className="header-stats">
+        <div className="stat-card income">
+          <div className="stat-icon">
+            <TrendingUp />
+          </div>
+          <div className="stat-content">
+            <span className="stat-label">Доходы</span>
+            <span className="stat-value">{formatCurrency(totalIncome)}</span>
+          </div>
+        </div>
         
-
+        <div className="stat-card balance">
+          <div className="stat-icon">
+            <Wallet />
+          </div>
+          <div className="stat-content">
+            <span className="stat-label">Баланс</span>
+            <span className={`stat-value ${totalBalance >= 0 ? 'positive' : 'negative'}`}>
+              {formatCurrency(totalBalance)}
+            </span>
+          </div>
+        </div>
         
-        <div className="balance">
-          <span className="balance-label">Баланс:</span>
-          <span className={`balance-amount ${totalBalance >= 0 ? 'positive' : 'negative'}`}>
-            {formatCurrency(totalBalance)}
-          </span>
+        <div className="stat-card expense">
+          <div className="stat-icon">
+            <TrendingDown />
+          </div>
+          <div className="stat-content">
+            <span className="stat-label">Расходы</span>
+            <span className="stat-value">{formatCurrency(totalExpense)}</span>
+          </div>
         </div>
       </div>
     </header>

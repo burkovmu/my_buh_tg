@@ -15,19 +15,21 @@ export function useTelegram() {
         setTelegramUserId(user.id)
       } else {
         // Для тестирования в браузере
-        const testUserId = localStorage.getItem('telegram_user_id') || 'test_user'
+        const testUserId = localStorage.getItem('telegram_user_id') || '123456789'
         setTelegramUserId(testUserId)
       }
     } else {
       // Для тестирования в браузере
-      const testUserId = localStorage.getItem('telegram_user_id') || 'test_user'
+      const testUserId = localStorage.getItem('telegram_user_id') || '123456789'
       setTelegramUserId(testUserId)
     }
   }, [])
 
   const setTestUserId = (userId) => {
-    localStorage.setItem('telegram_user_id', userId)
-    setTelegramUserId(userId)
+    // Убеждаемся, что userId - это число
+    const numericUserId = parseInt(userId) || 123456789
+    localStorage.setItem('telegram_user_id', numericUserId.toString())
+    setTelegramUserId(numericUserId.toString())
   }
 
   return {

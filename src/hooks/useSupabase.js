@@ -62,7 +62,7 @@ export function useSupabase() {
         amount,
         source,
         comment,
-        telegram_user_id: telegram_user_id || 'test_user' // Используем переданный ID или тестовый
+        telegram_user_id: telegram_user_id || 123456789 // Используем переданный ID или тестовый числовой ID
       }
 
       const { error } = await supabase

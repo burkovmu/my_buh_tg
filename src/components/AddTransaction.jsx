@@ -116,7 +116,7 @@ function AddTransaction({ onAdd }) {
         <div className="form-group">
           <label htmlFor="source" className="form-label">
             <User className="form-icon" />
-            От кого/на что:
+            {formData.type === 'income' ? 'От кого:' : 'На что:'}
           </label>
           <input
             type="text"
@@ -125,7 +125,7 @@ function AddTransaction({ onAdd }) {
             value={formData.source}
             onChange={handleChange}
             className="form-input"
-            placeholder="Например: Зарплата, Продукты..."
+            placeholder={formData.type === 'income' ? 'Например: Зарплата, Бонус...' : 'Например: Продукты, Транспорт...'}
           />
         </div>
         

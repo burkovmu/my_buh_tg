@@ -130,16 +130,61 @@ body {
 /* Адаптивность для мобильных */
 @media (max-width: 768px) {
   .header-stats {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 4px;
+  }
+  
+  .header-stats::-webkit-scrollbar {
+    display: none;
   }
   
   .stat-card {
-    padding: 16px;
+    padding: 16px 12px;
+    min-width: 100px;
+    flex-shrink: 0;
   }
   
   .stat-value {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+  
+  .stat-label {
+    font-size: 0.7rem;
+  }
+  
+  .stat-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+  .header-stats {
+    gap: 8px;
+    padding: 0 2px;
+  }
+  
+  .stat-card {
+    padding: 12px 8px;
+    min-width: 80px;
+  }
+  
+  .stat-value {
+    font-size: 0.9rem;
+  }
+  
+  .stat-label {
+    font-size: 0.65rem;
+  }
+  
+  .stat-icon svg {
+    width: 18px;
+    height: 18px;
   }
 }
 

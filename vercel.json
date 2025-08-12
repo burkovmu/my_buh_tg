@@ -2,27 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "**/*",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
-    {
-      "src": "/styles.css",
-      "dest": "/styles.css"
-    },
-    {
-      "src": "/script.js",
-      "dest": "/script.js"
-    },
-    {
-      "src": "/supabase-config.js",
-      "dest": "/supabase-config.js"
-    },
-    {
-      "src": "/env-loader.js",
-      "dest": "/env-loader.js"
-    },
     {
       "src": "/(.*)",
       "dest": "/index.html"

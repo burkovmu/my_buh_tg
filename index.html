@@ -4,93 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Финансовый учет</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1><i class="fas fa-wallet"></i> Финансовый учет</h1>
-            <div class="user-info">
-                <span class="user-id" id="userId">ID: Загрузка...</span>
-            </div>
-            <div class="balance">
-                <span class="balance-label">Баланс:</span>
-                <span class="balance-amount" id="totalBalance">0 ₽</span>
-            </div>
-        </header>
-
-        <div class="stats">
-            <div class="stat-item income">
-                <i class="fas fa-arrow-up"></i>
-                <span class="stat-label">Доходы</span>
-                <span class="stat-amount" id="totalIncome">0 ₽</span>
-            </div>
-            <div class="stat-item expense">
-                <i class="fas fa-arrow-down"></i>
-                <span class="stat-label">Расходы</span>
-                <span class="stat-amount" id="totalExpense">0 ₽</span>
-            </div>
-        </div>
-
-        <div class="add-transaction">
-            <h2>Добавить транзакцию</h2>
-            <form id="transactionForm">
-                <div class="form-group">
-                    <label for="type">Тип:</label>
-                    <select id="type" required>
-                        <option value="income">Доход</option>
-                        <option value="expense">Расход</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="amount">Сумма (₽):</label>
-                    <input type="number" id="amount" min="0" step="0.01" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="source">От кого/на что:</label>
-                    <input type="text" id="source" placeholder="Например: Зарплата, Продукты..." required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="comment">Комментарий:</label>
-                    <textarea id="comment" placeholder="Дополнительная информация..."></textarea>
-                </div>
-                
-                <button type="submit" class="btn-submit">
-                    <i class="fas fa-plus"></i> Добавить
-                </button>
-            </form>
-        </div>
-
-        <div class="transactions">
-            <h2>История транзакций</h2>
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all">Все</button>
-                <button class="filter-btn" data-filter="income">Доходы</button>
-                <button class="filter-btn" data-filter="expense">Расходы</button>
-            </div>
-            <div class="transactions-list" id="transactionsList">
-                <!-- Транзакции будут добавляться сюда -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Telegram Web App -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Переменные окружения -->
-    <script>
-        // Эти значения будут заменены Vercel во время сборки
-        window.SUPABASE_URL = '%%SUPABASE_URL%%';
-        window.SUPABASE_ANON_KEY = '%%SUPABASE_ANON_KEY%%';
-    </script>
-    <!-- Наша конфигурация -->
-    <script src="supabase-config.js"></script>
-    <!-- Основной скрипт -->
-    <script src="script.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
 </html> 

@@ -2,15 +2,25 @@
   "name": "my-buh-tg",
   "version": "1.0.0",
   "description": "Финансовый учет - Telegram Mini App",
-  "main": "index.html",
+  "type": "module",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Static site - no build required'",
-    "deploy": "vercel --prod",
-    "start": "vercel dev",
-    "bot": "node bot.js",
-    "bot:dev": "nodemon bot.js",
-    "setup-env": "cp env.example .env && echo 'Файл .env создан. Заполните его вашими данными Supabase'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@supabase/supabase-js": "^2.38.0",
+    "lucide-react": "^0.294.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.1.1",
+    "vite": "^4.5.0",
+    "vercel": "^32.0.0"
   },
   "keywords": [
     "telegram",
@@ -19,18 +29,11 @@
     "accounting",
     "budget",
     "expenses",
-    "income"
+    "income",
+    "react"
   ],
   "author": "burkovmu",
   "license": "MIT",
-  "dependencies": {
-    "node-telegram-bot-api": "^0.64.0",
-    "dotenv": "^16.3.1",
-    "@supabase/supabase-js": "^2.38.0"
-  },
-  "devDependencies": {
-    "vercel": "^32.0.0"
-  },
   "engines": {
     "node": ">=18.0.0"
   }

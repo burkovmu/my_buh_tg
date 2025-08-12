@@ -1,0 +1,55 @@
+/* Дополнительные стили для App компонента */
+.app {
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Анимации для компонентов */
+.header,
+.stats,
+.add-transaction,
+.transactions {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.header {
+  animation-delay: 0.1s;
+}
+
+.stats {
+  animation-delay: 0.2s;
+}
+
+.add-transaction {
+  animation-delay: 0.3s;
+}
+
+.transactions {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Улучшения для мобильных устройств */
+@media (max-width: 768px) {
+  .app {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 10px;
+  }
+} 

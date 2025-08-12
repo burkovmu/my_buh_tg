@@ -8,8 +8,8 @@ import { useTelegram } from './hooks/useTelegram'
 import './App.css'
 
 function App() {
-  const { supabase, transactions, addTransaction, deleteTransaction, loading } = useSupabase()
   const { telegramUserId } = useTelegram()
+  const { supabase, transactions, addTransaction, deleteTransaction, loading } = useSupabase(telegramUserId)
   const [currentFilter, setCurrentFilter] = useState('all')
 
   const filteredTransactions = currentFilter === 'all' 
@@ -38,7 +38,7 @@ function App() {
         totalExpense={totalExpense} 
       />
       
-      <AddTransaction onAdd={addTransaction} />
+      <AddTransaction onAdd={addTransaction} telegramUserId={telegramUserId} />
       
       <TransactionsList
         transactions={filteredTransactions}

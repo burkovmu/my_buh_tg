@@ -6,22 +6,25 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 )
 
-export function useSupabase() {
+export function useSupabase(telegramUserId) {
   const [transactions, setTransactions] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadTransactions()
-    setupRealtimeSubscription()
-  }, [])
+    if (telegramUserId) {
+      loadTransactions()
+      setupRealtimeSubscription()
+    }
+  }, [telegramUserId])
 
   const loadTransactions = async () => {
     try {
       setLoading(true)
-      // Загружаем транзакции с фильтрацией по пользователю
+      // Загружаем транзакции только для текущего пользователя
       const { data, error } = await supabase
         .from('transactions')
         .select('*')
+        .eq('telegram_user_id', telegramUserId)
         .order('created_at', { ascending: false })
 
       if (error) throw error
@@ -35,9 +38,14 @@ export function useSupabase() {
 
   const setupRealtimeSubscription = () => {
     supabase
-      .channel('transactions')
+      .channel(`transactions_${telegramUserId}`)
       .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'transactions' }, 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'transactions',
+          filter: `telegram_user_id=eq.${telegramUserId}`
+        }, 
         (payload) => {
           if (payload.eventType === 'INSERT') {
             setTransactions(prev => [payload.new, ...prev])

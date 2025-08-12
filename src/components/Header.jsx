@@ -20,7 +20,10 @@ function Header({ telegramUserId, totalBalance }) {
         
         <div className="user-info">
           <User className="user-icon" />
-          <span className="user-id">ID: {telegramUserId || 'Загрузка...'}</span>
+          <span className="user-id">
+            ID: {telegramUserId || 'Загрузка...'}
+            {telegramUserId === '123456789' && ' (тестовый)'}
+          </span>
         </div>
         
         <div className="balance">

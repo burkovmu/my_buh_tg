@@ -11,14 +11,19 @@ export function useTelegram() {
       
       // Получаем ID пользователя
       const user = window.Telegram.WebApp.initDataUnsafe?.user
+      console.log('Telegram user data:', user) // Для отладки
+      
       if (user?.id) {
-        setTelegramUserId(user.id)
+        console.log('Real Telegram ID found:', user.id)
+        setTelegramUserId(user.id.toString())
       } else {
+        console.log('No Telegram user data, using test ID')
         // Для тестирования в браузере
         const testUserId = localStorage.getItem('telegram_user_id') || '123456789'
         setTelegramUserId(testUserId)
       }
     } else {
+      console.log('Telegram Web App not available, using test ID')
       // Для тестирования в браузере
       const testUserId = localStorage.getItem('telegram_user_id') || '123456789'
       setTelegramUserId(testUserId)

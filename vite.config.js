@@ -11,6 +11,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true
   },
+  base: '/',
   define: {
     // Встраиваем переменные окружения в код
     'process.env.SUPABASE_URL': JSON.stringify(process.env.SUPABASE_URL),
